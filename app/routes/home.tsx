@@ -1,13 +1,25 @@
-import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import type {Route} from "./+types/home";
+import * as React from "react";
+import {Await} from "react-router";
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
+export async function loader({}: Route.LoaderArgs) {
+    const msgPromise = new Promise((res) =>
+        setTimeout(() => res("Hello World!"), 6_000)
+    );
+
+    return {msg: msgPromise};
 }
 
-export default function Home() {
-  return <Welcome />;
+export default function MyComponent({loaderData}: Route.ComponentProps) {
+    let {msg} = loaderData;
+
+    return (
+        <div>
+            <React.Suspense fallback={<div>Loading...</div>}>
+                <Await resolve={msg}>
+                    {(value) => <h3>{value}</h3>}
+                </Await>
+            </React.Suspense>
+        </div>
+    );
 }
