@@ -1,18 +1,18 @@
-Return promise in loader:
+Full async loading example:
 
 ```javascript
+import type {Route} from "./+types/home";
+import * as React from "react";
+import {Await} from "react-router";
+
 export async function loader({}: Route.LoaderArgs) {
     const msgPromise = new Promise((res) =>
-        setTimeout(() => res("Hello World!"), 6_000)
+        setTimeout(() => res("Hello World!"), 10_000)
     );
 
     return {msg: msgPromise};
 }
-```
 
-Streaming with Await / Suspense:
-
-```javascript
 export default function MyComponent({loaderData}: Route.ComponentProps) {
     let {msg} = loaderData;
 
