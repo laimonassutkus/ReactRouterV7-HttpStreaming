@@ -4,7 +4,7 @@ import {Await} from "react-router";
 
 export async function loader({}: Route.LoaderArgs) {
     const msgPromise = new Promise((res) =>
-        setTimeout(() => res("Hello World!"), 6_000)
+        setTimeout(() => res("Hello World!"), 10_000)
     );
 
     return {msg: msgPromise};

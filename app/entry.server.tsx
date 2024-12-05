@@ -7,7 +7,19 @@ import { isbot } from "isbot";
 import type { RenderToPipeableStreamOptions } from "react-dom/server";
 import { renderToPipeableStream } from "react-dom/server";
 
-const ABORT_DELAY = 60_000;
+/*
+You should export const streamTimeout from your entry.server.tsx file.
+While not in the main docs, it is in the API reference:
+https://api.reactrouter.com/v7/interfaces/react_router.ServerEntryModule.html#streamTimeout
+
+ <RemixServer abortDelay>` is no longer used.
+ Instead, you should `export const streamTimeout`
+ from `entry.server.tsx` and the remix server runtime
+ will use that as the delay to abort the streamed response.
+ */
+export const streamTimeout = 60_000
+
+const ABORT_DELAY = 60_000
 
 export default function handleRequest(
   request: Request,
